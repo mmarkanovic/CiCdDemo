@@ -1,0 +1,42 @@
+name: CI
+
+# Kada se pokreće: svaki push i svaki pull request na granu main
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# Najmanje potrebne ovlasti: workflow smije samo čitati kod
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest      # GitHubov Linux runner
+    timeout-minutes: 30         # zaštita od zaglavljenog builda
+
+    steps:
+      - name: Checkout koda
+        uses: actions/checkout@v6
+
+      - name: Postavljanje JDK-a
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Postavljanje Gradlea (s cacheom)
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Build, jedinični testovi i lint
+        run: ./gradlew assembleDebug testDebugUnitTest lintDebug
+
+      - name: Spremanje debug APK-a
+        uses: actions/upload-artifact@v7
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/*.apk
+
+      - name: Spremanje izvještaja testova i linta
+        if: always()             # i kad build padne, da se vidi zašto
