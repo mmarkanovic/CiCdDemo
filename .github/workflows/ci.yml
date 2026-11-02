@@ -40,3 +40,7 @@ jobs:
 
       - name: Spremanje izvještaja testova i linta
         if: always()             # i kad build padne, da se vidi zašto
+        uses: actions/upload-artifact@v7
+        with:
+          name: izvjestaji
+          path: app/build/reports/
