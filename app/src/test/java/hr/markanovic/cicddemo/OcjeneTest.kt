@@ -8,7 +8,7 @@ class OcjeneTest {
 
     @Test
     fun prosjekIspravnihOcjena() {
-        assertEquals(4.0, prosjekOcjena(listOf(5, 4, 3)), 0.001)
+        assertEquals(4.5, prosjekOcjena(listOf(5, 4, 3)), 0.001)
     }
 
     @Test
