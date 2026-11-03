@@ -38,7 +38,7 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-        run: ./gradlew testReleaseUnitTest assembleRelease bundleRelease
+        run: ./gradlew testDebugUnitTest assembleRelease bundleRelease
 
       - name: Brisanje keystorea s runnera
         if: always()               # brise se i ako build padne
